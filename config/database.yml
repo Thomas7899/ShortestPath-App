@@ -82,8 +82,8 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: path_app_production2
-    username: path_app
+    database: d5d40n4qfkra7a
+    username: u4g6i6qr4rm1u9
     password: <%= ENV["PATH_APP_DATABASE_PASSWORD"] %>
     url: <%= ENV["DATABASE_URL"] %>
   cache:
