@@ -1,0 +1,94 @@
+<div class="flex flex-col items-center px-6">
+  <h1 class="text-4xl font-semibold text-center my-6">Shortest Path Finder</h1>
+  <% if @nodes.present? %>
+    <%= form_with(url: find_shortest_path_home_index_path, method: :get, local: true, class: "space-y-6") do %>
+      <div class="flex flex-col space-y-2">
+        <label for="start_node" class="text-lg font-medium">Start Node:</label>
+        <%= select_tag :start_node, options_from_collection_for_select(@nodes, :name, :name), prompt: "Select start node", class: "border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+      
+      <div class="flex flex-col space-y-2">
+        <label for="end_node" class="text-lg font-medium">End Node:</label>
+        <%= select_tag :end_node, options_from_collection_for_select(@nodes, :name, :name), prompt: "Select end node", class: "border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+  
+      <div>
+        <%= submit_tag "Find Shortest Path", class: "w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="text-red-500"></p>
+  <% end %>
+  
+  <% if @result && @result[:distances] && @result[:path] %>
+    <div class="mt-8">
+      <h2 class="text-2xl font-semibold text-gray-800">🙌 Shortest Path 🎉</h2>
+      
+      <p class="text-gray-600">From <strong><%= params[:start_node] %></strong> to <strong><%= params[:end_node] %></strong></p>
+  
+      <div class="mt-4 max-w-md mx-auto">
+        <p class="font-medium">Distances:</p>
+        <div class="bg-gray-100 p-4 rounded-md max-h-40 overflow-y-auto text-sm">
+          <%= @result[:distances].inspect %>
+        </div>
+      </div>
+      
+      <div class="mt-4 max-w-md mx-auto">
+        <p class="font-medium">Path:</p>
+        <div class="bg-gray-100 p-4 rounded-md max-h-40 overflow-y-auto text-sm">
+          <%= @result[:path] %>
+        </div>
+      </div>
+  
+      <div class="mt-4">
+        <p class="font-medium">Total Cost:</p>
+        <div class="bg-gray-100 p-4 rounded-md text-sm">
+          <%= @result[:total_cost] %>
+        </div>
+      </div>
+    </div>
+  <% elsif @error %>
+    <p class="text-red-500 mt-4"><%= @error %></p>
+  <% end %>
+  
+  </div>
+  
+  <div id="graph" class="mt-8" style="height: 500px;"></div>
+  
+  <script type="text/javascript">
+    // Prepare the data for nodes and edges
+    var nodes = <%= raw @nodes.to_json %>;
+    var edges = <%= raw @edges.to_json %>;
+  
+    // Convert the data
+    var visNodes = nodes.map(function(node) {
+      return { id: node.id, label: node.name };
+    });
+  
+    var visEdges = edges.map(function(edge) {
+      return { from: edge.start_node_id, to: edge.end_node_id, label: edge.weight.toString() };
+    });
+  
+    // Network visualization
+    var container = document.getElementById('graph');
+    var data = {
+      nodes: new vis.DataSet(visNodes),
+      edges: new vis.DataSet(visEdges)
+    };
+    var options = {
+      nodes: {
+        shape: 'dot',
+        size: 20
+      },
+      edges: {
+        width: 2,
+        font: { align: 'top' }
+      },
+      physics: {
+        enabled: true
+      }
+    };
+  
+    var network = new vis.Network(container, data, options);
+  </script>
+  
