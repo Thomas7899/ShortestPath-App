@@ -21,25 +21,9 @@ production:
   password: <%= ENV['DATABASE_PASSWORD'] %>
   host: <%= ENV['DATABASE_HOST'] %>
 
-  # Definiere den Anker primary_production
-  primary_production: &primary_production
+  cable:
     <<: *default
     database: <%= ENV['DATABASE_NAME'] %>
     username: <%= ENV['DATABASE_USER'] %>
     password: <%= ENV['DATABASE_PASSWORD'] %>
     host: <%= ENV['DATABASE_HOST'] %>
-
-  cache:
-    <<: *primary_production
-    database: path_app_production_cache
-    migrations_paths: db/cache_migrate
-
-  queue:
-    <<: *primary_production
-    database: path_app_production_queue
-    migrations_paths: db/queue_migrate
-
-  cable:
-    <<: *primary_production
-    database: path_app_production_cable
-    migrations_paths: db/cable_migrate
