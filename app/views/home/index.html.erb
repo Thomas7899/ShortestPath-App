@@ -4,12 +4,12 @@
     <%= form_with(url: find_shortest_path_home_index_path, method: :get, local: true, class: "space-y-6") do %>
       <div class="flex flex-col space-y-2">
         <label for="start_node" class="text-lg font-medium">Start Node:</label>
-        <%= select_tag :start_node, options_from_collection_for_select(@nodes, :name, :name), prompt: "Select start node", class: "border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        <%= select_tag :start_node, options_from_collection_for_select(@nodes, :name, :name), prompt: "Select node", class: "border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
       </div>
       
       <div class="flex flex-col space-y-2">
         <label for="end_node" class="text-lg font-medium">End Node:</label>
-        <%= select_tag :end_node, options_from_collection_for_select(@nodes, :name, :name), prompt: "Select end node", class: "border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        <%= select_tag :end_node, options_from_collection_for_select(@nodes, :name, :name), prompt: "Select node", class: "border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
       </div>
   
       <div>

@@ -13,7 +13,7 @@
 ActiveRecord::Schema[8.0].define(version: 2025_03_30_152213) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
-  enable_extension "postgis"
+
 
   create_table "edges", force: :cascade do |t|
     t.bigint "start_node_id", null: false
@@ -32,6 +32,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_30_152213) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+ 
 
   add_foreign_key "edges", "nodes", column: "end_node_id"
   add_foreign_key "edges", "nodes", column: "start_node_id"
