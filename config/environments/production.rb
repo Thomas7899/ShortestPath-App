@@ -89,4 +89,7 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   config.action_cable.mount_path = nil
+
+  config.action_cable.disable_request_forgery_protection = true
+config.action_cable.allowed_request_origins = []
 end

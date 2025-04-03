@@ -22,6 +22,8 @@ module PathApp
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    
+    config.action_cable.mount_path = nil
+config.action_cable.url = nil
   end
 end
