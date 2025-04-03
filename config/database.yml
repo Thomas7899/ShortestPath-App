@@ -15,15 +15,17 @@ test:
   database: path_app_test
 
 production:
-  <<: *default
+  <<: *default # Inherit default settings like adapter, encoding, pool
   database: <%= ENV['DATABASE_NAME'] %>
   username: <%= ENV['DATABASE_USER'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
   host: <%= ENV['DATABASE_HOST'] %>
-
+  # Add the nested cable configuration here
   cable:
-    <<: *default
-    database: <%= ENV['DATABASE_NAME'] %>
-    username: <%= ENV['DATABASE_USER'] %>
+    <<: *default # Inherit default settings again
+    database: <%= ENV['DATABASE_NAME'] %>   # Often the same database, but could be different
+    username: <%= ENV['DATABASE_USER'] %> # Use the same credentials or dedicated ones
     password: <%= ENV['DATABASE_PASSWORD'] %>
     host: <%= ENV['DATABASE_HOST'] %>
+    # You might need the adapter explicitly if not in default, or if different
+    # adapter: postgresql
